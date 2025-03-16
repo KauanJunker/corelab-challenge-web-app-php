@@ -1,13 +1,25 @@
 import { Star } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useTask } from "../hooks/useTask";
 
 export const CreatorTask = () => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [title, setTitle] = useState("Título");
   const [description, setDescription] = useState("");
+  const { addTask } = useTask();
+
+  const createTask = () => {
+    addTask({ title, description, favorite: isFavorite });
+  };
+
+  useEffect(() => {
+    setTitle("Título");
+    setDescription("");
+    setIsFavorite(false);
+  }, [addTask]);
 
   return (
-    <div className="bg-white rounded-xs shadow-xl border-[1px] border-[#D9D9D9] w-[530px] min-h-[50px] flex flex-col">
+    <div className="bg-white rounded-4xl md:rounded-xs shadow-xl border-[1px] border-[#D9D9D9] w-full md:w-[530px] min-h-[50px] flex flex-col">
       <div className="flex justify-between items-center py-2 px-4 border-b-[1px] border-[#D9D9D9]">
         <input
           type="text"
@@ -22,7 +34,11 @@ export const CreatorTask = () => {
             onClick={() => setIsFavorite(!isFavorite)}
             fill={isFavorite ? "#FFA000" : "#fff"}
           />
-          <button className="bg-emerald-400 hover:bg-emerald-500 transition-all delay-100 py-1 px-2 rounded-md text-white text-xs cursor-pointer">
+          <button
+            className="bg-emerald-400 hover:bg-emerald-500 transition-all delay-100 py-1 px-2 rounded-md 
+          text-white text-xs cursor-pointer"
+            onClick={createTask}
+          >
             Adicionar
           </button>
         </div>

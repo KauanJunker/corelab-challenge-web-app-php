@@ -1,9 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost/api",
-  // withCredentials: true,
-  // withXSRFToken: true,
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 export default apiClient;

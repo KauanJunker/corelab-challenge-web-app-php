@@ -3,8 +3,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useAuth } from "../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "../hooks/useAuthContext";
 
 const schema = z.object({
   email: z.string().email("Endereço de e-mail invalido"),
@@ -21,15 +19,9 @@ function LoginView() {
   } = useForm({ resolver: zodResolver(schema) });
 
   const { signIn } = useAuth();
-  const { isAuthenticated } = useAuthContext();
-  const navigate = useNavigate();
 
   const onSubmit = (data: LoginUserSchema) => {
     signIn({ email: data.email, password: data.password });
-
-    if (isAuthenticated === true) {
-      navigate("/");
-    }
   };
 
   return (
