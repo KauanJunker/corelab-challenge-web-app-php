@@ -1,7 +1,7 @@
 import ExitIcon from "../assets/exit-icon.svg";
 import ColorIcon from "../assets/color-icon.svg";
 import PencilIcon from "../assets/pencil-icon.svg";
-import { Divide, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import { useState } from "react";
 import { Colors } from "../utils/colors";
 
@@ -18,18 +18,20 @@ export const NoteCard = ({
 }: NoteCardInterface) => {
   const [isFavorite, setIsFavorite] = useState(favorite);
   const [isEditing, setIsEditing] = useState(false);
+  const [isEditingTitle, setIsEditingTitle] = useState(title);
   const [isEditingColors, setIsEditingColors] = useState(false);
   const [text, setText] = useState(description);
-  console.log("auqi", isEditingColors);
 
   return (
-    <div className="relative border border-red-500 mb-10">
+    <>
       <div className="flex flex-col w-[390px] rounded-3xl drop-shadow-2xl bg-white min-h-[430px] justify-between ">
         {/* TITLE */}
         <div className="flex items-center justify-between border-b-[1px] border-[#D9D9D9] py-2 px-4">
           <input
+            disabled={!isEditing}
             type="text"
-            value={title}
+            value={isEditingTitle}
+            onChange={(e) => setIsEditingTitle(e.target.value)}
             className="w-full focus:outline-none"
           />
           <Star
@@ -41,7 +43,7 @@ export const NoteCard = ({
         </div>
         <div className="px-4 pt-2 pb-3 h-full flex flex-col justify-between">
           {/* DESCRIPTION */}
-          <div className="flex items-start justify-start ">
+          <div className="flex items-start justify-start">
             <textarea
               disabled={!isEditing}
               value={text}
@@ -75,14 +77,10 @@ export const NoteCard = ({
       {isEditingColors && (
         <div className="flex gap-2 py-1 px-2 shadow-md rounded-md z-50 bg-white absolute -bottom-9 left-10 border-1 border-[#D9D9D9]">
           {Colors.map((c, i) => (
-            <div
-              key={i}
-              className={`bg-[${c}] rounded-full  h-9 w-9 `}
-              // className="bg-[#FFCAB9] rounded-full h-9 w-9"
-            />
+            <div key={i} className={`bg-[${c}] rounded-full  h-9 w-9 `} />
           ))}
         </div>
       )}
-    </div>
+    </>
   );
 };

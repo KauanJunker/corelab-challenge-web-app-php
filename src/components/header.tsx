@@ -1,7 +1,15 @@
 import Logo from "../assets/logo.png";
 import ExitIcon from "../assets/exit-icon.svg";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export const Header = () => {
+  const { isAuthenticated, setIsAuthenticated } = useAuthContext();
+
+  const LogOut = () => {
+    localStorage.removeItem("token");
+    setIsAuthenticated(!isAuthenticated);
+  };
+
   return (
     <header className="bg-white flex justify-between px-7 py-2 items-center shadow-md">
       <div className="flex items-center gap-6">
@@ -19,7 +27,12 @@ export const Header = () => {
       </div>
 
       <div>
-        <img src={ExitIcon} alt="Saida Icon" />
+        <img
+          src={ExitIcon}
+          alt="Saida Icon"
+          className="cursor-pointer"
+          onClick={LogOut}
+        />
       </div>
     </header>
   );
